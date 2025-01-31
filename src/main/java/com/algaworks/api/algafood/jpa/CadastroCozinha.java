@@ -31,4 +31,9 @@ public class CadastroCozinha {
     public Cozinha salvar(Cozinha cozinha) {
         return entityManager.merge(cozinha);
     }
+
+    @Transactional
+    public void remover(Cozinha cozinha) {
+        entityManager.remove(cozinha);
+    }
 }
