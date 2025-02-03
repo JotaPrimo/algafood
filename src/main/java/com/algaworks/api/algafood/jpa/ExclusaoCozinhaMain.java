@@ -20,5 +20,4 @@ public class ExclusaoCozinhaMain {
 
         cadastroCozinha.remover(cozinha);
     }
-
 }
