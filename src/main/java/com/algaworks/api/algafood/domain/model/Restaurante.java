@@ -8,7 +8,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "restaurantes")
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Restaurante {
 
     @Id
