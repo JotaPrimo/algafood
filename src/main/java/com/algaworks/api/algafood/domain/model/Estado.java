@@ -4,15 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Table(name = "cozinhas")
+@Table(name = "estados")
 @Entity
 @Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Cozinha {
+public class Estado {
 
-    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(nullable = false)

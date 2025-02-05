@@ -1,6 +1,7 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -17,9 +18,10 @@ public class Restaurante {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
-    @Column(name = "taxa_frete")
+    @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
     @ManyToOne
