@@ -5,7 +5,6 @@ import lombok.EqualsAndHashCode;
 
 @Table(name = "estados")
 @Entity
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Estado {
 
     @Id
@@ -42,9 +41,6 @@ public class Estado {
 
     @Override
     public String toString() {
-        return "Estado{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                '}';
+        return "Estado{" + "id=" + id + ", nome='" + nome + '\'' + '}';
     }
 }
