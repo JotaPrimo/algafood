@@ -26,4 +26,8 @@ public class Restaurante {
 
     @ManyToOne
     private Cozinha cozinha;
+
+    public Long getId() {
+        return id;
+    }
 }

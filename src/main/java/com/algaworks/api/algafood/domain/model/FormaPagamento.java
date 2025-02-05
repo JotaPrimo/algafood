@@ -3,6 +3,7 @@ package com.algaworks.api.algafood.domain.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 @Table(name = "forma_pagamentos")
 @Entity
@@ -17,4 +18,8 @@ public class FormaPagamento {
 
     @Column(nullable = false)
     private String descricao;
+
+    public Long getId() {
+        return id;
+    }
 }

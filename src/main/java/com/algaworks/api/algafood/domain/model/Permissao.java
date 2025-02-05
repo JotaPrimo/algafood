@@ -20,4 +20,8 @@ public class Permissao {
 
     @Column(nullable = false)
     private String descricao;
+
+    public Long getId() {
+        return id;
+    }
 }
