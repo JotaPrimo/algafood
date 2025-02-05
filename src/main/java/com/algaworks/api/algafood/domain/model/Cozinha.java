@@ -2,7 +2,6 @@ package com.algaworks.api.algafood.domain.model;
 
 
 import jakarta.persistence.*;
-import lombok.*;
 
 import java.util.Objects;
 
