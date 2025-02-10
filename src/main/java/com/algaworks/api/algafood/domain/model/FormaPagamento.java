@@ -12,7 +12,7 @@ import lombok.Getter;
 public class FormaPagamento {
 
     @Id
-    @EqualsAndHashCode.Include
+     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

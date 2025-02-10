@@ -1,8 +1,10 @@
 package com.algaworks.api.algafood.api.controllers;
 
+import com.algaworks.api.algafood.api.model.CozinhasXmlWrapper;
 import com.algaworks.api.algafood.domain.model.Cozinha;
 import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +38,11 @@ public class CozinhaController {
         }
 
         throw new RuntimeException("Registro não encontrado");
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
+    public CozinhasXmlWrapper listarXml() {
+        List<Cozinha> cozinhas = cozinhaRepository.findAll();
+        return new CozinhasXmlWrapper(cozinhas);
     }
 }
