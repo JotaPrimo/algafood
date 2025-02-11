@@ -31,4 +31,10 @@ public class CozinhaService {
         Objects.requireNonNull(cozinha, "Cozinha não pode ser null");
         return cozinhaRepository.save(cozinha);
     }
+
+    @Transactional
+    public void remover(Cozinha cozinha) {
+        Objects.requireNonNull(cozinha, "Cozinha não pode ser null");
+        cozinhaRepository.delete(cozinha);
+    }
 }
