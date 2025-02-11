@@ -4,6 +4,7 @@ import com.algaworks.api.algafood.api.model.CozinhasXmlWrapper;
 import com.algaworks.api.algafood.domain.model.Cozinha;
 import com.algaworks.api.algafood.domain.services.CozinhaService;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,5 +52,19 @@ public class CozinhaController {
         Cozinha cozinhaCreated = cozinhaService.salvar(cozinha);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(cozinhaCreated);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody @Valid Cozinha cozinha) {
+        Cozinha cozinhaAtual = cozinhaService.buscar(id);
+
+        if (cozinha == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
+        cozinhaAtual = cozinhaService.salvar(cozinhaAtual);
+
+        return ResponseEntity.status(HttpStatus.OK).body(cozinhaAtual);
     }
 }
