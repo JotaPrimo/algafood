@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/restaurantes")
@@ -41,23 +42,45 @@ public class RestauranteController {
 
     @PostMapping
     public ResponseEntity<Restaurante> salvar(@RequestBody @Valid Restaurante restaurante) {
-        Restaurante restauranteSaved = cadastroRestauranteService.salvar(restaurante);
+        Restaurante restauranteAtual = cadastroRestauranteService.salvar(restaurante);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(restauranteSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(restauranteAtual);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Restaurante> atualizar(@PathVariable Long id, @RequestBody @Valid Restaurante restaurante) {
-        Restaurante restauranteSaved = cadastroRestauranteService.buscarPorId(id);
+        Restaurante restauranteAtual = cadastroRestauranteService.buscarPorId(id);
 
-        if (restauranteSaved == null) {
+        if (restauranteAtual == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        BeanUtils.copyProperties(restaurante, restauranteSaved, "id");
-        Restaurante restauranteUpdated = cadastroRestauranteService.salvar(restauranteSaved);
+        BeanUtils.copyProperties(restaurante, restauranteAtual, "id");
+        Restaurante restauranteUpdated = cadastroRestauranteService.salvar(restauranteAtual);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restauranteUpdated);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<?> atualizarParcial(@PathVariable Long id, @RequestBody @Valid Map<String, Object> campos) {
+
+        Restaurante restauranteAtual = cadastroRestauranteService.buscarPorId(id);
+
+        if (restauranteAtual == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        //todo atualizar propriedades
+        merge(campos, restauranteAtual);
+
+        return atualizar(id, restauranteAtual);
+    }
+
+    private static void merge(Map<String, Object> camposOrigem, Restaurante restauranteDestino) {
+        camposOrigem.forEach((nomePropriedade, valorPropriedade) -> {
+            System.out.println("==========================================");
+            System.out.println(nomePropriedade + " = " + valorPropriedade);
+        });
     }
 
     @DeleteMapping("/{id}")
