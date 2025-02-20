@@ -17,7 +17,11 @@ import java.util.Optional;
 
 public class CadastroCozinhaService {
 
-    private CozinhaRepository cozinhaRepository;
+    private final CozinhaRepository cozinhaRepository;
+
+    public CadastroCozinhaService(CozinhaRepository cozinhaRepository) {
+        this.cozinhaRepository = cozinhaRepository;
+    }
 
     public Cozinha buscar(Long id) {
         Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);

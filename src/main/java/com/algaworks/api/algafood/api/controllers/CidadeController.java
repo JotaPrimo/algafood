@@ -1,9 +1,10 @@
 package com.algaworks.api.algafood.api.controllers;
 
+
 import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
-import com.algaworks.api.algafood.domain.model.Estado;
-import com.algaworks.api.algafood.domain.service.EstadoService;
+import com.algaworks.api.algafood.domain.model.Cidade;
+import com.algaworks.api.algafood.domain.service.CadastroCidadeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,47 +15,47 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/estados")
-public class EstadoController {
+@RequestMapping("/cidades")
+public class CidadeController {
 
-    private final EstadoService estadoService;
+    private final CadastroCidadeService cidadeService;
 
     @Autowired
-    public EstadoController(EstadoService estadoService) {
-        this.estadoService = estadoService;
+    public CidadeController(CadastroCidadeService cidadeService) {
+        this.cidadeService = cidadeService;
     }
 
     @GetMapping
-    public List<Estado> listar() {
-        return estadoService.buscarTodos();
+    public List<Cidade> listar() {
+        return cidadeService.buscarTodas();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estado> buscar(@PathVariable Long id) {
+    public ResponseEntity<Cidade> buscar(@PathVariable Long id) {
         try {
-            Estado estado = estadoService.buscarPorId(id);
+            Cidade estado = cidadeService.buscarPorId(id);
             return ResponseEntity.status(HttpStatus.OK).body(estado);
-        }catch (EntidadeNaoEncontradaException exception) {
+        } catch (EntidadeNaoEncontradaException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Estado> cadastrar(@RequestBody @Valid Estado estado) {
-        Estado estadoSaved = estadoService.salvar(estado);
+    public ResponseEntity<Cidade> cadastrar(@RequestBody @Valid Cidade cidade) {
+        Cidade cidadeSaved = cidadeService.salvar(cidade);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(estadoSaved);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cidadeSaved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Estado> atualizar(@PathVariable Long id, @RequestBody @Valid Estado estado) {
+    public ResponseEntity<Cidade> atualizar(@PathVariable Long id, @RequestBody @Valid Cidade cidade) {
         try {
-            Estado estadoSaved = estadoService.buscarPorId(id);
+            Cidade cidadeSaved = cidadeService.buscarPorId(id);
 
-            BeanUtils.copyProperties(estado, estadoSaved, "id");
+            BeanUtils.copyProperties(cidade, cidadeSaved, "id");
 
-            return ResponseEntity.status(HttpStatus.OK).body(estadoSaved);
-        }catch (EntidadeNaoEncontradaException exception) {
+            return ResponseEntity.status(HttpStatus.OK).body(cidadeSaved);
+        } catch (EntidadeNaoEncontradaException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
@@ -62,10 +63,10 @@ public class EstadoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> remover(@PathVariable Long id) {
         try {
-            estadoService.remover(id);
+            cidadeService.remover(id);
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch (EntidadeNaoEncontradaException exception) {
+        } catch (EntidadeNaoEncontradaException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } catch (EntidadeEmUsoException exception) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();

@@ -1,9 +1,11 @@
 package com.algaworks.api.algafood.domain.service;
 
+import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Estado;
 import com.algaworks.api.algafood.domain.repository.EstadoRepository;
-import org.springframework.http.ResponseEntity;
+import jakarta.transaction.Transactional;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,6 @@ public class EstadoService {
     }
 
     public Estado buscarPorId(Long id) {
-        Objects.requireNonNull("Id do estado não pode ser null");
 
         Optional<Estado> optionalEstado = repository.findById(id);
 
@@ -33,5 +34,24 @@ public class EstadoService {
         }
 
         throw new EntidadeNaoEncontradaException(String.format("Estado de id #%d não encontrado", id));
+    }
+
+    @Transactional
+    public Estado salvar(Estado estado) {
+        Objects.requireNonNull(estado);
+
+        return repository.save(estado);
+    }
+
+    @Transactional
+    public void remover(Long id) {
+        try {
+            Estado estado = repository.findById(id)
+                    .orElseThrow(() -> new EntidadeNaoEncontradaException(String.format("Estado #%d não encontrado", id)));
+
+            repository.delete(estado);
+        } catch (DataIntegrityViolationException e) {
+            throw new EntidadeEmUsoException(String.format("Estado #%d não pode ser deletado, pois está em uso", id));
+        }
     }
 }
