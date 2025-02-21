@@ -3,7 +3,7 @@ package com.algaworks.api.algafood.domain.service;
 import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cozinha;
-import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.api.algafood.domain.jap_repository.CozinhaRepositoryJpa;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,20 +17,20 @@ import java.util.Optional;
 
 public class CadastroCozinhaService {
 
-    private final CozinhaRepository cozinhaRepository;
+    private final CozinhaRepositoryJpa cozinhaRepositoryJpa;
 
-    public CadastroCozinhaService(CozinhaRepository cozinhaRepository) {
-        this.cozinhaRepository = cozinhaRepository;
+    public CadastroCozinhaService(CozinhaRepositoryJpa cozinhaRepositoryJpa) {
+        this.cozinhaRepositoryJpa = cozinhaRepositoryJpa;
     }
 
     public Cozinha buscar(Long id) {
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);
+        Optional<Cozinha> cozinhaOptional = cozinhaRepositoryJpa.findById(id);
 
         return cozinhaOptional.orElse(null);
     }
 
     public Cozinha buscarOuFalhar(Long id) {
-        Optional<Cozinha> cozinhaOptional = cozinhaRepository.findById(id);
+        Optional<Cozinha> cozinhaOptional = cozinhaRepositoryJpa.findById(id);
 
         if (cozinhaOptional.isEmpty()) {
             throw new EntidadeNaoEncontradaException(String.format("Registro de cozinha com id %d não encontrado", id));
@@ -40,20 +40,20 @@ public class CadastroCozinhaService {
     }
 
     public List<Cozinha> listar() {
-        return cozinhaRepository.findAll();
+        return cozinhaRepositoryJpa.findAll();
     }
 
     @Transactional
     public Cozinha salvar(Cozinha cozinha) {
         Objects.requireNonNull(cozinha, "Cozinha não pode ser null");
-        return cozinhaRepository.save(cozinha);
+        return cozinhaRepositoryJpa.save(cozinha);
     }
 
     @Transactional
     public void excluir(Long id) {
         try {
             Cozinha cozinha = buscar(id);
-            cozinhaRepository.delete(cozinha);
+            cozinhaRepositoryJpa.delete(cozinha);
 
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontradaException(

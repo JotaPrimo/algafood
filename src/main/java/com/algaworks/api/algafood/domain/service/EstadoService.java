@@ -3,7 +3,7 @@ package com.algaworks.api.algafood.domain.service;
 import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Estado;
-import com.algaworks.api.algafood.domain.repository.EstadoRepository;
+import com.algaworks.api.algafood.domain.jap_repository.EstadoRepositoryJpa;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -15,9 +15,9 @@ import java.util.Optional;
 @Service
 public class EstadoService {
 
-    private final EstadoRepository repository;
+    private final EstadoRepositoryJpa repository;
 
-    public EstadoService(EstadoRepository repository) {
+    public EstadoService(EstadoRepositoryJpa repository) {
         this.repository = repository;
     }
 
