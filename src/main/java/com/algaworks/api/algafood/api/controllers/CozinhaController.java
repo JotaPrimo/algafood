@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/cozinhas")
@@ -31,17 +32,6 @@ public class CozinhaController {
         return cadastroCozinhaService.listar();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cozinha> buscar(@PathVariable Long id) {
-        Cozinha cozinha = cadastroCozinhaService.buscar(id);
-
-        if (cozinha == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // status depois o body ou build se não quiser corpo
-        return ResponseEntity.status(HttpStatus.OK).body(cozinha);
-    }
 
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public CozinhasXmlWrapper listarXml() {
@@ -58,14 +48,14 @@ public class CozinhaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Cozinha> atualizar(@PathVariable Long id, @RequestBody @Valid Cozinha cozinha) {
-        Cozinha cozinhaAtual = cadastroCozinhaService.buscar(id);
+        Optional<Cozinha> optionalCozinha = cadastroCozinhaService.buscar(id);
 
-        if (cozinha == null) {
+        if (optionalCozinha.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        BeanUtils.copyProperties(cozinha, cozinhaAtual, "id");
-        cozinhaAtual = cadastroCozinhaService.salvar(cozinhaAtual);
+        BeanUtils.copyProperties(cozinha, optionalCozinha.get(), "id");
+        Cozinha cozinhaAtual = cadastroCozinhaService.salvar(optionalCozinha.get());
 
         return ResponseEntity.status(HttpStatus.OK).body(cozinhaAtual);
     }

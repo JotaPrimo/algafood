@@ -3,8 +3,8 @@ package com.algaworks.api.algafood.domain.service;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cozinha;
 import com.algaworks.api.algafood.domain.model.Restaurante;
-import com.algaworks.api.algafood.domain.jap_repository.CozinhaRepositoryJpa;
-import com.algaworks.api.algafood.domain.jap_repository.RestauranteRepositoryJpa;
+import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
+import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,33 +16,33 @@ import java.util.Optional;
 @Service
 public class CadastroRestauranteService {
 
-    private final RestauranteRepositoryJpa restauranteRepositoryJpa;
-    private final CozinhaRepositoryJpa cozinhaRepositoryJpa;
+    private final RestauranteRepository restauranteRepository;
+    private final CozinhaRepository cozinhaRepository;
 
     @Autowired
-    public CadastroRestauranteService(RestauranteRepositoryJpa restauranteRepositoryJpa, CozinhaRepositoryJpa cozinhaRepositoryJpa) {
-        this.restauranteRepositoryJpa = restauranteRepositoryJpa;
-        this.cozinhaRepositoryJpa = cozinhaRepositoryJpa;
+    public CadastroRestauranteService(RestauranteRepository restauranteRepository, CozinhaRepository cozinhaRepository) {
+        this.restauranteRepository = restauranteRepository;
+        this.cozinhaRepository = cozinhaRepository;
     }
 
     public List<Restaurante> listar() {
-        return restauranteRepositoryJpa.findAll();
+        return restauranteRepository.findAll();
     }
 
     @Transactional
     public Restaurante salvar(Restaurante restaurante) {
 
-        Cozinha cozinha = cozinhaRepositoryJpa
+        Cozinha cozinha = cozinhaRepository
                 .findById(restaurante.getCozinha().getId()).orElseThrow(
                         () -> new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada", restaurante.getCozinha().getId())));
 
         restaurante.setCozinha(cozinha);
 
-        return restauranteRepositoryJpa.save(restaurante);
+        return restauranteRepository.save(restaurante);
     }
 
     public Restaurante buscarPorId(Long id) {
-        Optional<Restaurante> optionalRestaurante = restauranteRepositoryJpa.findById(id);
+        Optional<Restaurante> optionalRestaurante = restauranteRepository.findById(id);
 
         return optionalRestaurante.orElse(null);
     }
@@ -55,7 +55,7 @@ public class CadastroRestauranteService {
             throw new EntidadeNaoEncontradaException(String.format("Restaurante #%d não encontrado", id));
         }
 
-        restauranteRepositoryJpa.delete(restaurante);
+        restauranteRepository.delete(restaurante);
     }
 
     @Transactional
@@ -66,6 +66,6 @@ public class CadastroRestauranteService {
             throw new EntidadeNaoEncontradaException(String.format("Restaurante #%d não encontrado", restaurante.getId()));
         }
 
-        restauranteRepositoryJpa.delete(restaurante);
+        restauranteRepository.delete(restaurante);
     }
 }

@@ -3,7 +3,7 @@ package com.algaworks.api.algafood.domain.service;
 import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cozinha;
-import com.algaworks.api.algafood.domain.jap_repository.CozinhaRepositoryJpa;
+import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -17,16 +17,14 @@ import java.util.Optional;
 
 public class CadastroCozinhaService {
 
-    private final CozinhaRepositoryJpa cozinhaRepositoryJpa;
+    private final CozinhaRepository cozinhaRepositoryJpa;
 
-    public CadastroCozinhaService(CozinhaRepositoryJpa cozinhaRepositoryJpa) {
+    public CadastroCozinhaService(CozinhaRepository cozinhaRepositoryJpa) {
         this.cozinhaRepositoryJpa = cozinhaRepositoryJpa;
     }
 
-    public Cozinha buscar(Long id) {
-        Optional<Cozinha> cozinhaOptional = cozinhaRepositoryJpa.findById(id);
-
-        return cozinhaOptional.orElse(null);
+    public Optional<Cozinha> buscar(Long id) {
+        return cozinhaRepositoryJpa.findById(id);
     }
 
     public Cozinha buscarOuFalhar(Long id) {
@@ -52,8 +50,14 @@ public class CadastroCozinhaService {
     @Transactional
     public void excluir(Long id) {
         try {
-            Cozinha cozinha = buscar(id);
-            cozinhaRepositoryJpa.delete(cozinha);
+            Optional<Cozinha> cozinha = buscar(id);
+
+            if (cozinha.isEmpty()) {
+                throw new EntidadeNaoEncontradaException(String.format("Não existe um cadastro de cozinha com código %d", id));
+            }
+
+            cozinhaRepositoryJpa.delete(cozinha.get());
+
 
         } catch (EmptyResultDataAccessException e) {
             throw new EntidadeNaoEncontradaException(
