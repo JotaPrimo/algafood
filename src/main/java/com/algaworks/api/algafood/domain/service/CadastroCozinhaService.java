@@ -14,7 +14,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-
 public class CadastroCozinhaService {
 
     private final CozinhaRepository cozinhaRepositoryJpa;
