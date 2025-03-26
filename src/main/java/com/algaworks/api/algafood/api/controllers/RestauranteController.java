@@ -2,7 +2,9 @@ package com.algaworks.api.algafood.api.controllers;
 
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Restaurante;
+import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.api.algafood.domain.service.CadastroRestauranteService;
+import com.algaworks.api.algafood.infrastructure.repository.spec.RestauranteSpecs;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -21,10 +23,12 @@ import java.util.Map;
 public class RestauranteController {
 
     private final CadastroRestauranteService cadastroRestauranteService;
+    private final RestauranteRepository restauranteRepository;
 
     @Autowired
-    public RestauranteController(CadastroRestauranteService cadastroRestauranteService) {
+    public RestauranteController(CadastroRestauranteService cadastroRestauranteService, RestauranteRepository restauranteRepository) {
         this.cadastroRestauranteService = cadastroRestauranteService;
+        this.restauranteRepository = restauranteRepository;
     }
 
     @GetMapping
@@ -99,8 +103,13 @@ public class RestauranteController {
             cadastroRestauranteService.remover(id);
 
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }catch (EntidadeNaoEncontradaException exception) {
+        } catch (EntidadeNaoEncontradaException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @GetMapping("/com-frete-gratis")
+    public List<Restaurante> restaurantesComFreteGratis(String nome) {
+        return restauranteRepository.findAll(RestauranteSpecs.comFreteGratis().and(RestauranteSpecs.comNomeSemelhante(nome)));
     }
 }
