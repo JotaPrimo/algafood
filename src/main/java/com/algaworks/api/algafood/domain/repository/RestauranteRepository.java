@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface RestauranteRepository extends JpaRepository<Restaurante, Long>, JpaSpecificationExecutor<Restaurante> {
+public interface RestauranteRepository
+        extends CustomJpaRepository<Restaurante, Long>, RestauranteRepositoryQueries,
+        JpaSpecificationExecutor<Restaurante> {
     List<Restaurante> queryByTaxaFreteBetween(BigDecimal taxaInicial, BigDecimal taxaFinal);
 
     @Query("from Restaurante where nome like %:nome% and cozinha.id = :id")
