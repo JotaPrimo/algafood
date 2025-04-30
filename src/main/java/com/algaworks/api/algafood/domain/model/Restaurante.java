@@ -27,6 +27,7 @@ public class Restaurante {
     @ManyToOne
     private Cozinha cozinha;
 
+    @JsonIgnore
     @Embedded
     private Endereco endereco;
 
