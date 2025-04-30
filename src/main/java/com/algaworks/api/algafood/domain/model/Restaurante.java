@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 
@@ -26,6 +27,7 @@ public class Restaurante {
     @ManyToOne
     private Cozinha cozinha;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "restaurante_forma_pagamento",
