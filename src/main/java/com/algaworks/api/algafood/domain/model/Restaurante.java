@@ -27,6 +27,9 @@ public class Restaurante {
     @ManyToOne
     private Cozinha cozinha;
 
+    @Embedded
+    private Endereco endereco;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
@@ -84,6 +87,14 @@ public class Restaurante {
 
     public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
         this.formasPagamento = formasPagamento;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     @Override
