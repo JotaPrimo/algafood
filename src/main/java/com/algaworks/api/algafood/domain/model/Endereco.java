@@ -2,6 +2,8 @@ package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Data
@@ -23,6 +25,7 @@ public class Endereco {
     @Column(name = "endereco_bairro")
     private String bairro;
 
-    @Column(name = "endereco_cidade")
-    private String cidade;
+    @ManyToOne
+    @JoinColumn(name = "endereco_cidade_id")
+    private Cidade cidade;
 }

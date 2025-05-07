@@ -62,7 +62,7 @@ public class RestauranteController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
-        BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco");
+        BeanUtils.copyProperties(restaurante, restauranteAtual, "id", "formasPagamento", "endereco", "dataCadastro");
         Restaurante restauranteUpdated = cadastroRestauranteService.salvar(restauranteAtual);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(restauranteUpdated);
