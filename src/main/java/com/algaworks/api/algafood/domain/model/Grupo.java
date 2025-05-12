@@ -30,13 +30,9 @@ public class Grupo {
     @UpdateTimestamp
     private LocalDateTime dataAtualizacao;
 
-    @JsonIgnore
-    @ManyToMany(mappedBy = "grupo")
-    @JoinTable(
-            name = "grupo_permissao",
-            joinColumns = @JoinColumn(name = "grupo_id"),
-            inverseJoinColumns = @JoinColumn(name = "grupo_permissao_id")
-    )
+    @ManyToMany
+    @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private List<Permissao> permissoes = new ArrayList<>();
 
     public Long getId() {

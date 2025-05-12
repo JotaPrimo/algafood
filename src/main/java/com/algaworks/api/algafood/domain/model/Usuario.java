@@ -32,12 +32,9 @@ public class Usuario {
     private LocalDateTime dataCadastro;
 
 
-    @ManyToMany(mappedBy = "usuario")
-    @JoinTable(
-        name = "usuario_grupo",
-        joinColumns = @JoinColumn(name = "usuario_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_grupo")
-    )
+    @ManyToMany
+    @JoinTable(name = "usuario_grupo", joinColumns = @JoinColumn(name = "usuario_id"),
+            inverseJoinColumns = @JoinColumn(name = "grupo_id"))
     private List<Grupo> grupos = new ArrayList<>();
 
     public Long getId() {
