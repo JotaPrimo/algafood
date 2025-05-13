@@ -29,7 +29,7 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    @JsonIgnoreProperties({}) // isso vai ignorar uma propriedade dentro de cozinha
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY) // ToOne é sempre Eager, alterando para lazy
     private Cozinha cozinha;
 
@@ -50,7 +50,7 @@ public class Restaurante {
     @OneToMany(mappedBy = "restaurante")
     private List<Produto> produtos = new ArrayList<>();
 
-    @JsonIgnore
+    // @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "restaurante_forma_pagamento",
