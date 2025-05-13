@@ -1,6 +1,7 @@
 package com.algaworks.api.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,9 +29,8 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    // @Lazy
-    @JsonIgnore
-    @ManyToOne
+    @JsonIgnoreProperties({}) // isso vai ignorar uma propriedade dentro de cozinha
+    @ManyToOne(fetch = FetchType.LAZY) // ToOne é sempre Eager, alterando para lazy
     private Cozinha cozinha;
 
     @JsonIgnore
