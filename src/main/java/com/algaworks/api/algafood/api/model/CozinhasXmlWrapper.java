@@ -12,7 +12,6 @@ import java.util.List;
  * Embrulha uma lista de cozinha
  * */
 
-@Data
 @JacksonXmlRootElement(localName = "cozinhas")
 public class CozinhasXmlWrapper {
 
@@ -20,4 +19,19 @@ public class CozinhasXmlWrapper {
     @JacksonXmlProperty(localName = "cozinha")
     @JacksonXmlElementWrapper(useWrapping = false)
     private List<Cozinha> cozinhas;
+
+    public CozinhasXmlWrapper() {
+    }
+
+    public CozinhasXmlWrapper(@NonNull List<Cozinha> cozinhas) {
+        this.cozinhas = cozinhas;
+    }
+
+    public List<Cozinha> getCozinhas() {
+        return cozinhas;
+    }
+
+    public void setCozinhas(List<Cozinha> cozinhas) {
+        this.cozinhas = cozinhas;
+    }
 }

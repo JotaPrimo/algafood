@@ -30,7 +30,7 @@ public class Restaurante {
     private BigDecimal taxaFrete;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY) // ToOne é sempre Eager, alterando para lazy
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cozinha cozinha;
 
     @JsonIgnore
