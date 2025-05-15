@@ -2,29 +2,25 @@ package com.algaworks.api.algafood.infrastructure.repository.seeder;
 
 import com.algaworks.api.algafood.domain.model.Estado;
 import com.algaworks.api.algafood.domain.repository.EstadoRepository;
-import com.github.javafaker.Faker;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.algaworks.api.algafood.infrastructure.repository.seeder.config.AbstractSeeder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Component
-public class EstadoSeeder {
+public class EstadoSeeder extends AbstractSeeder<Estado> {
 
-    @Autowired
-    private EstadoRepository estadoRepository;
+    public EstadoSeeder(EstadoRepository repository) {
+        super(repository);
+    }
 
-    private final Faker faker = new Faker();
+    @Override
+    protected Estado gerarEntidade() {
+        Estado estado = new Estado();
+        estado.setNome(faker.address().state());
+        return estado;
+    }
 
-    public void seed(int quantidade) {
-        List<Estado> estados = new ArrayList<>();
-        for (int i = 0; i < quantidade; i++) {
-            Estado estado = new Estado();
-            estado.setNome(faker.address().state());
-            estados.add(estado);
-        }
-        estadoRepository.saveAll(estados);
-        System.out.println("Seed de estados executado !");
+    @Override
+    public String getNome() {
+        return "estado";
     }
 }
