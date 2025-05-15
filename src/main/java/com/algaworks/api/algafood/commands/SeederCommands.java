@@ -19,16 +19,17 @@ public class SeederCommands {
         executor.seedAll(quantidade);
     }
 
+
     /**
      * Exemplo: seed --nome estado --qtde 5
      * qtde é fixo como 10 se não passar nenhum valor
      * */
-    @ShellMethod("Executa um seeder específico")
+    @ShellMethod(key = "seed", value = "Executa um seeder específico, recebendo o nome por parâmetro")
     public void seed(@ShellOption String nome, @ShellOption(defaultValue = "10") int qtde) {
         executor.seedByNome(nome, qtde);
     }
 
-    @ShellMethod(key = "truncateTable", value = "Limpa (trunca) uma tabela pelo nome.")
+    @ShellMethod(key = "truncateTable", value = "Limpa (trunca) uma tabela pelo nome")
     public void truncateTable(@ShellOption String tabela) {
         executor.truncateTable(tabela);
     }

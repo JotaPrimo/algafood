@@ -7,9 +7,7 @@ import com.algaworks.api.algafood.infrastructure.repository.seeder.config.Abstra
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
@@ -24,7 +22,7 @@ public class CidadeSeeder extends AbstractSeeder<Cidade> {
 
     @Override
     protected Cidade gerarEntidade() {
-        Estado estado = retornaRegistroAleatorio();
+        Estado estado = retornarEstadoAleatorio();
         Cidade cidade = new Cidade();
         cidade.setNome(faker.address().cityName());
         cidade.setEstado(estado);
@@ -32,7 +30,7 @@ public class CidadeSeeder extends AbstractSeeder<Cidade> {
         return cidade;
     }
 
-    private Estado retornaRegistroAleatorio() {
+    private Estado retornarEstadoAleatorio() {
         List<Estado> estados = estadoRepository.findTop20By();
 
         if (estados.isEmpty()) {
