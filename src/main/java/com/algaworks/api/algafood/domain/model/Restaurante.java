@@ -3,6 +3,7 @@ package com.algaworks.api.algafood.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 
 @Entity
 @Table(name = "restaurantes")
@@ -59,16 +61,6 @@ public class Restaurante {
     )
     private List<FormaPagamento> formasPagamento = new ArrayList<>();
 
-    public Restaurante() {
-    }
-
-    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Cozinha cozinha) {
-        this.id = id;
-        this.nome = nome;
-        this.taxaFrete = taxaFrete;
-        this.cozinha = cozinha;
-    }
-
     public Long getId() {
         return id;
     }
@@ -101,14 +93,6 @@ public class Restaurante {
         this.cozinha = cozinha;
     }
 
-    public List<FormaPagamento> getFormasPagamento() {
-        return formasPagamento;
-    }
-
-    public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
-        this.formasPagamento = formasPagamento;
-    }
-
     public Endereco getEndereco() {
         return endereco;
     }
@@ -139,6 +123,14 @@ public class Restaurante {
 
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+
+    public List<FormaPagamento> getFormasPagamento() {
+        return formasPagamento;
+    }
+
+    public void setFormasPagamento(List<FormaPagamento> formasPagamento) {
+        this.formasPagamento = formasPagamento;
     }
 
     @Override

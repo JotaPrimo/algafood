@@ -1,7 +1,9 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+
 
 @Table(name = "estados")
 @Entity
@@ -15,12 +17,9 @@ public class Estado {
     @Column(nullable = false)
     private String nome;
 
-    public Estado() {
-    }
-
-    public Estado(Long id, String nome) {
-        this.id = id;
-        this.nome = nome;
+    @Override
+    public String toString() {
+        return "Estado{" + "id=" + id + ", nome='" + nome + '\'' + '}';
     }
 
     public Long getId() {
@@ -37,10 +36,5 @@ public class Estado {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    @Override
-    public String toString() {
-        return "Estado{" + "id=" + id + ", nome='" + nome + '\'' + '}';
     }
 }

@@ -31,15 +31,6 @@ public class Cozinha {
     @OneToMany(mappedBy = "cozinha")
     private List<Restaurante> restaurantes = new ArrayList<>();
 
-    public Cozinha() {
-    }
-
-    public Cozinha(Long id, String nome, List<Restaurante> restaurantes) {
-        this.id = id;
-        this.nome = nome;
-        this.restaurantes = restaurantes;
-    }
-
     public Long getId() {
         return id;
     }

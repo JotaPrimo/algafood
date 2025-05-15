@@ -1,6 +1,5 @@
 package com.algaworks.api.algafood.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Grupo {
@@ -35,29 +35,6 @@ public class Grupo {
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private List<Permissao> permissoes = new ArrayList<>();
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public List<Permissao> getPermissoes() {
-        return permissoes;
-    }
-
-    public void setPermissoes(List<Permissao> permissoes) {
-        this.permissoes = permissoes;
-    }
 
     @Override
     public boolean equals(Object o) {

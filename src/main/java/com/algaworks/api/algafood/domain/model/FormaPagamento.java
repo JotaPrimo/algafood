@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
+@Data
 @Table(name = "forma_pagamentos")
 @Entity
-@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FormaPagamento {
 
@@ -18,8 +18,4 @@ public class FormaPagamento {
 
     @Column(nullable = false)
     private String descricao;
-
-    public Long getId() {
-        return id;
-    }
 }
