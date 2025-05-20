@@ -26,5 +26,9 @@ public abstract class AbstractSeeder<T> implements Seeder {
         System.out.println("Seed de " + getNome() + " processado com sucesso!");
     }
 
+
+    /**
+     * Usar o faker para gerar informações aleatórias para as colunas
+     * */
     protected abstract T gerarEntidade();
 }

@@ -22,11 +22,13 @@ public class SeederExecutor {
     @Autowired
     public SeederExecutor(
             EstadoSeeder estadoSeeder,
-            CidadeSeeder cidadeSeeder
+            CidadeSeeder cidadeSeeder,
+            CozinhaSeeder cozinhaSeeder
     ) {
         this.seeders = Arrays.asList(
                 estadoSeeder,
-                cidadeSeeder
+                cidadeSeeder,
+                cozinhaSeeder
         );
     }
 

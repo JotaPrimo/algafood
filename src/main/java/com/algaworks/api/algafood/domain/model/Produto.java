@@ -20,30 +20,4 @@ public class Produto {
 
     @ManyToOne
     private Restaurante restaurante;
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Produto produto = (Produto) o;
-        return Objects.equals(id, produto.id) && Objects.equals(nome, produto.nome);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nome);
-    }
-
-    @Override
-    public String toString() {
-        return "Produto{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", preco=" + preco +
-                ", ativo=" + ativo +
-                ", restaurante=" + restaurante +
-                '}';
-    }
 }

@@ -22,3 +22,8 @@
 1747333654449:seedAll
 1747333814130:seed --nome cidade
 1747333928613:truncateTable --tabela cidades
+1747674984852:seed --nome cidade
+1747679014271:seed --nome cozinhas
+1747679096815:seed --nome cozinha
+1747679103871:seed --nome cozinhas
+1747679249427:seed --nome cozinha
