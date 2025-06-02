@@ -16,56 +16,33 @@ import java.util.Optional;
 @Service
 public class CadastroRestauranteService {
 
-    private final RestauranteRepository restauranteRepository;
-    private final CozinhaRepository cozinhaRepository;
+    private static final String MSG_RESTAURANTE_NAO_ENCONTRADO
+            = "Não existe um cadastro de restaurante com código %d";
 
     @Autowired
-    public CadastroRestauranteService(RestauranteRepository restauranteRepository, CozinhaRepository cozinhaRepository) {
-        this.restauranteRepository = restauranteRepository;
-        this.cozinhaRepository = cozinhaRepository;
-    }
+    private RestauranteRepository restauranteRepository;
 
-    public List<Restaurante> listar() {
-        return restauranteRepository.findAll();
-    }
+    @Autowired
+    private CadastroCozinhaService cadastroCozinha;
 
-    @Transactional
     public Restaurante salvar(Restaurante restaurante) {
+        Long cozinhaId = restaurante.getCozinha().getId();
 
-        Cozinha cozinha = cozinhaRepository
-                .findById(restaurante.getCozinha().getId()).orElseThrow(
-                        () -> new EntidadeNaoEncontradaException(String.format("Cozinha de id %d não encontrada", restaurante.getCozinha().getId())));
+        Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
+
+//		Cozinha cozinha = cozinhaRepository.findById(cozinhaId)
+//			.orElseThrow(() -> new EntidadeNaoEncontradaException(
+//					String.format("Não existe cadastro de cozinha com código %d", cozinhaId)));
 
         restaurante.setCozinha(cozinha);
 
         return restauranteRepository.save(restaurante);
     }
 
-    public Restaurante buscarPorId(Long id) {
-        Optional<Restaurante> optionalRestaurante = restauranteRepository.findById(id);
-
-        return optionalRestaurante.orElse(null);
+    public Restaurante buscarOuFalhar(Long restauranteId) {
+        return restauranteRepository.findById(restauranteId)
+                .orElseThrow(() -> new EntidadeNaoEncontradaException(
+                        String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
     }
 
-    @Transactional
-    public void remover(Long id) {
-        Restaurante restaurante = buscarPorId(id);
-
-        if (restaurante == null) {
-            throw new EntidadeNaoEncontradaException(String.format("Restaurante #%d não encontrado", id));
-        }
-
-        restauranteRepository.delete(restaurante);
-    }
-
-    @Transactional
-    public void remover(Restaurante restaurante) {
-        Objects.requireNonNull(restaurante, "Objeto de restaurante não pode ser null");
-
-        if (restaurante.getId() == null) {
-            throw new EntidadeNaoEncontradaException(String.format("Restaurante #%d não encontrado", restaurante.getId()));
-        }
-
-        restauranteRepository.delete(restaurante);
-    }
 }

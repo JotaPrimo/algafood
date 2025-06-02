@@ -1,75 +1,65 @@
 package com.algaworks.api.algafood.api.controllers;
 
 
-import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.api.exceptions.NegocioException;
 import com.algaworks.api.algafood.domain.model.Cidade;
+import com.algaworks.api.algafood.domain.repository.CidadeRepository;
 import com.algaworks.api.algafood.domain.service.CadastroCidadeService;
-import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/cidades")
+@RequestMapping(value = "/cidades")
 public class CidadeController {
 
-    private final CadastroCidadeService cidadeService;
+    @Autowired
+    private CidadeRepository cidadeRepository;
 
     @Autowired
-    public CidadeController(CadastroCidadeService cidadeService) {
-        this.cidadeService = cidadeService;
-    }
+    private CadastroCidadeService cadastroCidade;
 
     @GetMapping
     public List<Cidade> listar() {
-        return cidadeService.buscarTodas();
+        return cidadeRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cidade> buscar(@PathVariable Long id) {
-        try {
-            Cidade estado = cidadeService.buscarPorId(id);
-            return ResponseEntity.status(HttpStatus.OK).body(estado);
-        } catch (EntidadeNaoEncontradaException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @GetMapping("/{cidadeId}")
+    public Cidade buscar(@PathVariable Long cidadeId) {
+        return cadastroCidade.buscarOuFalhar(cidadeId);
     }
 
     @PostMapping
-    public ResponseEntity<Cidade> cadastrar(@RequestBody @Valid Cidade cidade) {
-        Cidade cidadeSaved = cidadeService.salvar(cidade);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(cidadeSaved);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Cidade> atualizar(@PathVariable Long id, @RequestBody @Valid Cidade cidade) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Cidade adicionar(@RequestBody Cidade cidade) {
         try {
-            Cidade cidadeSaved = cidadeService.buscarPorId(id);
-
-            BeanUtils.copyProperties(cidade, cidadeSaved, "id");
-
-            return ResponseEntity.status(HttpStatus.OK).body(cidadeSaved);
-        } catch (EntidadeNaoEncontradaException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return cadastroCidade.salvar(cidade);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> remover(@PathVariable Long id) {
-        try {
-            cidadeService.remover(id);
+    @PutMapping("/{cidadeId}")
+    public Cidade atualizar(@PathVariable Long cidadeId,
+                            @RequestBody Cidade cidade) {
+        Cidade cidadeAtual = cadastroCidade.buscarOuFalhar(cidadeId);
 
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        } catch (EntidadeNaoEncontradaException exception) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } catch (EntidadeEmUsoException exception) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        BeanUtils.copyProperties(cidade, cidadeAtual, "id");
+
+        try {
+            return cadastroCidade.salvar(cidadeAtual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
         }
+    }
+
+    @DeleteMapping("/{cidadeId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void remover(@PathVariable Long cidadeId) {
+        cadastroCidade.excluir(cidadeId);
     }
 }

@@ -11,7 +11,11 @@ import java.util.Optional;
 
 @Repository
 public interface CozinhaRepository extends CustomJpaRepository<Cozinha, Long> {
-    // containing -> like
-    List<Cozinha> findAllByNomeContaining(String nome);
+
+    List<Cozinha> findTodasByNomeContaining(String nome);
+
     Optional<Cozinha> findByNome(String nome);
+
+    boolean existsByNome(String nome);
+
 }
