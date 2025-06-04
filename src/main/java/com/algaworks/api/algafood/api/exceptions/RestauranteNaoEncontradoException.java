@@ -4,15 +4,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
-public class EstadoNaoEncontradoException extends EntidadeNaoEncontradaException {
+public class RestauranteNaoEncontradoException extends EntidadeNaoEncontradaException {
 
     private static final long serialVersionUID = 1L;
 
-    public EstadoNaoEncontradoException(String mensagem) {
+    public RestauranteNaoEncontradoException(String mensagem) {
         super(mensagem);
     }
 
-    public EstadoNaoEncontradoException(Long id) {
-        this(String.format("Estado de código %d não encontrado", id));
+    public RestauranteNaoEncontradoException(Long id) {
+        this(String.format("Restaurante de código %d não encontrado", id));
     }
 }

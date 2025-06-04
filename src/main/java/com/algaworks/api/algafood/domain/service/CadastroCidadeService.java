@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.domain.service;
 
+import com.algaworks.api.algafood.api.exceptions.CidadeNaoEncontradaException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cidade;
@@ -27,12 +28,7 @@ public class CadastroCidadeService {
 
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
-
         Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
-
-//		Estado estado = estadoRepository.findById(estadoId)
-//			.orElseThrow(() -> new EntidadeNaoEncontradaException(
-//					String.format("Não existe cadastro de estado com código %d", estadoId)));
 
         cidade.setEstado(estado);
 
@@ -44,8 +40,7 @@ public class CadastroCidadeService {
             cidadeRepository.deleteById(cidadeId);
 
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_CIDADE_NAO_ENCONTRADA, cidadeId));
+            throw new CidadeNaoEncontradaException(cidadeId);
 
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(
