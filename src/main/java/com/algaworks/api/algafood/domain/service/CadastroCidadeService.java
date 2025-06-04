@@ -1,8 +1,8 @@
 package com.algaworks.api.algafood.domain.service;
 
-import com.algaworks.api.algafood.api.exceptions.CidadeNaoEncontradaException;
-import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
-import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.domain.exceptions.CidadeNaoEncontradaException;
+import com.algaworks.api.algafood.domain.exceptions.EntidadeEmUsoException;
+import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cidade;
 import com.algaworks.api.algafood.domain.model.Estado;
 import com.algaworks.api.algafood.domain.repository.CidadeRepository;

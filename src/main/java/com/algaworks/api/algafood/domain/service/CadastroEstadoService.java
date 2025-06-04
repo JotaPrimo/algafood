@@ -1,8 +1,7 @@
 package com.algaworks.api.algafood.domain.service;
 
-import com.algaworks.api.algafood.api.exceptions.EntidadeEmUsoException;
-import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
-import com.algaworks.api.algafood.api.exceptions.EstadoNaoEncontradoException;
+import com.algaworks.api.algafood.domain.exceptions.EntidadeEmUsoException;
+import com.algaworks.api.algafood.domain.exceptions.EstadoNaoEncontradoException;
 import com.algaworks.api.algafood.domain.model.Estado;
 import com.algaworks.api.algafood.domain.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

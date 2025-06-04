@@ -1,18 +1,14 @@
 package com.algaworks.api.algafood.api.controllers;
 
-import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
-import com.algaworks.api.algafood.api.exceptions.NegocioException;
-import com.algaworks.api.algafood.api.exceptions.RestauranteNaoEncontradoException;
+import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.domain.exceptions.RestauranteNaoEncontradoException;
 import com.algaworks.api.algafood.domain.model.Restaurante;
 import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.api.algafood.domain.service.CadastroRestauranteService;
-import com.algaworks.api.algafood.infrastructure.repository.spec.RestauranteSpecs;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 

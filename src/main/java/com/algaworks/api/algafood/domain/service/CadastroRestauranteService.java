@@ -1,17 +1,11 @@
 package com.algaworks.api.algafood.domain.service;
 
-import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cozinha;
 import com.algaworks.api.algafood.domain.model.Restaurante;
-import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
 import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 @Service
 public class CadastroRestauranteService {
