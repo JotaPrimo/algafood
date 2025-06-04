@@ -2,6 +2,7 @@ package com.algaworks.api.algafood.api.controllers;
 
 
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.api.exceptions.EstadoNaoEncontradoException;
 import com.algaworks.api.algafood.api.exceptions.NegocioException;
 import com.algaworks.api.algafood.domain.model.Cidade;
 import com.algaworks.api.algafood.domain.repository.CidadeRepository;
@@ -52,7 +53,7 @@ public class CidadeController {
 
         try {
             return cadastroCidade.salvar(cidadeAtual);
-        } catch (EntidadeNaoEncontradaException e) {
+        } catch (EstadoNaoEncontradoException e) {
             throw new NegocioException(e.getMessage());
         }
     }

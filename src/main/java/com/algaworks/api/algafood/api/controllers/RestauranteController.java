@@ -1,6 +1,7 @@
 package com.algaworks.api.algafood.api.controllers;
 
 import com.algaworks.api.algafood.api.exceptions.EntidadeNaoEncontradaException;
+import com.algaworks.api.algafood.api.exceptions.NegocioException;
 import com.algaworks.api.algafood.domain.model.Restaurante;
 import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.api.algafood.domain.service.CadastroRestauranteService;
@@ -38,47 +39,15 @@ public class RestauranteController {
         return cadastroRestaurante.buscarOuFalhar(restauranteId);
     }
 
-//	@PostMapping
-//	public ResponseEntity<?> adicionar(@RequestBody Restaurante restaurante) {
-//		try {
-//			restaurante = cadastroRestaurante.salvar(restaurante);
-//
-//			return ResponseEntity.status(HttpStatus.CREATED)
-//					.body(restaurante);
-//		} catch (EntidadeNaoEncontradaException e) {
-//			return ResponseEntity.badRequest()
-//					.body(e.getMessage());
-//		}
-//	}
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Restaurante adicionar(@RequestBody Restaurante restaurante) {
-        return cadastroRestaurante.salvar(restaurante);
+        try {
+            return cadastroRestaurante.salvar(restaurante);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
-
-//	@PutMapping("/{restauranteId}")
-//	public ResponseEntity<?> atualizar(@PathVariable Long restauranteId,
-//			@RequestBody Restaurante restaurante) {
-//		try {
-//			Restaurante restauranteAtual = restauranteRepository
-//					.findById(restauranteId).orElse(null);
-//
-//			if (restauranteAtual != null) {
-//				BeanUtils.copyProperties(restaurante, restauranteAtual,
-//						"id", "formasPagamento", "endereco", "dataCadastro", "produtos");
-//
-//				restauranteAtual = cadastroRestaurante.salvar(restauranteAtual);
-//				return ResponseEntity.ok(restauranteAtual);
-//			}
-//
-//			return ResponseEntity.notFound().build();
-//
-//		} catch (EntidadeNaoEncontradaException e) {
-//			return ResponseEntity.badRequest()
-//					.body(e.getMessage());
-//		}
-//	}
 
     @PutMapping("/{restauranteId}")
     public Restaurante atualizar(@PathVariable Long restauranteId,
@@ -88,7 +57,11 @@ public class RestauranteController {
         BeanUtils.copyProperties(restaurante, restauranteAtual,
                 "id", "formasPagamento", "endereco", "dataCadastro", "produtos");
 
-        return cadastroRestaurante.salvar(restauranteAtual);
+        try {
+            return cadastroRestaurante.salvar(restauranteAtual);
+        } catch (EntidadeNaoEncontradaException e) {
+            throw new NegocioException(e.getMessage());
+        }
     }
 
     @PatchMapping("/{restauranteId}")

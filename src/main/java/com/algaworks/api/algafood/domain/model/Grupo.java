@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Data
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 public class Grupo {
@@ -35,6 +34,56 @@ public class Grupo {
             inverseJoinColumns = @JoinColumn(name = "permissao_id"))
     private List<Permissao> permissoes = new ArrayList<>();
 
+    public Grupo() {
+    }
+
+    public Grupo(Long id, String nome, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao, List<Permissao> permissoes) {
+        this.id = id;
+        this.nome = nome;
+        this.dataCadastro = dataCadastro;
+        this.dataAtualizacao = dataAtualizacao;
+        this.permissoes = permissoes;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(LocalDateTime dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public LocalDateTime getDataAtualizacao() {
+        return dataAtualizacao;
+    }
+
+    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+        this.dataAtualizacao = dataAtualizacao;
+    }
+
+    public List<Permissao> getPermissoes() {
+        return permissoes;
+    }
+
+    public void setPermissoes(List<Permissao> permissoes) {
+        this.permissoes = permissoes;
+    }
 
     @Override
     public boolean equals(Object o) {
