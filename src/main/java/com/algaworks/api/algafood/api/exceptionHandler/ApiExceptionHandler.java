@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.api.exceptionHandler;
 
+import com.algaworks.api.algafood.domain.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.exceptions.NegocioException;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,16 @@ public class ApiExceptionHandler {
                 .setMensagem("O tipo de mídia não é aceito.").build();
 
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                .body(problema);
+    }
+
+    @ExceptionHandler(EntidadeEmUsoException.class)
+    public ResponseEntity<?> entidadeEmUsoException(EntidadeEmUsoException exception) {
+        Problema problema = Problema.builder()
+                .setDataHora(LocalDateTime.now())
+                .setMensagem(exception.getMessage()).build();
+
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(problema);
     }
 }
