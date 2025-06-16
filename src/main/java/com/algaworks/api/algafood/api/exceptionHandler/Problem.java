@@ -1,10 +1,12 @@
 package com.algaworks.api.algafood.api.exceptionHandler;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Problem {
 
     private Integer status;

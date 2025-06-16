@@ -20,7 +20,7 @@ public class CadastroRestauranteService {
     private CadastroCozinhaService cadastroCozinha;
 
     public Restaurante salvar(Restaurante restaurante) {
-        Long cozinhaId = restaurante.getCozinha().getId();
+        Long cozinhaId = buscarOuFalhar(restaurante.getId()).getId();
 
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
