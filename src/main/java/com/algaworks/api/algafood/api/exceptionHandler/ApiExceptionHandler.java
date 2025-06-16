@@ -13,7 +13,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -39,14 +38,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode, WebRequest request) {
 
         if (body == null) {
-            body = Problema.builder()
-                    .setDataHora(LocalDateTime.now())
-                    .setMensagem(ex.getMessage())
+            body = Problem.builder()
+                    .title(ex.getMessage())
+                    .status(statusCode.value())
                     .build();
         } else if (body instanceof String) {
-            body = Problema.builder()
-                    .setDataHora(LocalDateTime.now())
-                    .setMensagem((String) body)
+            body = Problem.builder()
+                    .title((String) body)
+                    .status(statusCode.value())
                     .build();
         }
 
