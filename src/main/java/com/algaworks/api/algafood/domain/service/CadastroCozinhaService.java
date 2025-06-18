@@ -44,5 +44,4 @@ public class CadastroCozinhaService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         String.format(MSG_COZINHA_NAO_ENCONTRADA, cozinhaId)));
     }
-
 }

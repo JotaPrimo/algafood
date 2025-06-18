@@ -30,7 +30,7 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         ProblemType problemType = ProblemType.MENSAGEM_INCOMPREENSIVEL;
-        String detail = "Corpo da requisiçãoi inválido. Verifique erro de sintaxe";
+        String detail = "Corpo da requisição inválido. Verifique erro de sintaxe";
 
         Problem problem = createProblemBuilder(status, problemType, detail).build();
 
