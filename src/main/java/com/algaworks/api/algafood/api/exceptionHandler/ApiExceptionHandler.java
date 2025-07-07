@@ -19,7 +19,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -116,13 +115,13 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @Override
-    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException  ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+    protected ResponseEntity<Object> handleNoHandlerFoundException(NoHandlerFoundException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         ProblemType problemType = ProblemType.RECURSO_NAO_ENCONTRADO;
         String detail = ex.getMessage();
 
         Problem problem = createProblemBuilder(status, problemType, detail).build();
 
-        return handleExceptionInternal(ex, problem,headers, status, request);
+        return handleExceptionInternal(ex, problem, headers, status, request);
     }
 
     @ExceptionHandler(EntidadeEmUsoException.class)
@@ -164,6 +163,25 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         return super.handleExceptionInternal(ex, body, headers, statusCode, request);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleUncaught(Exception ex, WebRequest request) {
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
+        ProblemType problemType = ProblemType.ERRO_DE_SISTEMA;
+        String detail = "Ocorreu um erro interno inesperado no sistema. "
+                + "Tente novamente e se o problema persistir, entre em contato "
+                + "com o administrador do sistema.";
+
+        // Importante colocar o printStackTrace (pelo menos por enquanto, que não estamos
+        // fazendo logging) para mostrar a stacktrace no console
+        // Se não fizer isso, você não vai ver a stacktrace de exceptions que seriam importantes
+        // para você durante, especialmente na fase de desenvolvimento
+        ex.printStackTrace();
+
+        Problem problem = createProblemBuilder(status, problemType, detail).build();
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 
     private Problem.ProblemBuilder createProblemBuilder(HttpStatusCode status, ProblemType problemType, String detail) {
