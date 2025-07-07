@@ -1,0 +1,36 @@
+1747248263244:hello
+1747249007375:seed
+1747249515155:estadoSeeder seed
+1747249667299:estadoSeeder seed --5
+1747249685954:estadoSeeder seed --qtde 5
+1747328064341:seed
+1747328656901:seedAll
+1747328799093:seed --name estado
+1747328807348:seed --nome estado
+1747330071414:seed --nome cidade
+1747330560528:seedAll
+1747331095825:truncate cidades
+1747331104674:truncate --tabela cidades
+1747331150706:truncateTable --tabela cidades
+1747331380209:seedAll
+1747332579793:seederAll
+1747332589807:seedAll
+1747332686816:seed --tabela cidades
+1747332705970:seed --nome cidades
+1747332719280:cidade --nome cidade
+1747332743921:seed --nome cidade
+1747333654449:seedAll
+1747333814130:seed --nome cidade
+1747333928613:truncateTable --tabela cidades
+1747674984852:seed --nome cidade
+1747679014271:seed --nome cozinhas
+1747679096815:seed --nome cozinha
+1747679103871:seed --nome cozinhas
+1747679249427:seed --nome cozinha
+1747761051047:seed --nome cidade
+1747761584967:seed --nome estado
+1747761894332:seed --nome estados
+1747761900874:seed --nome estado
+1747762426732:seed --nome cidade
+1747763576738:seed --nome estado
+1747763582865:seed --nome cidade
