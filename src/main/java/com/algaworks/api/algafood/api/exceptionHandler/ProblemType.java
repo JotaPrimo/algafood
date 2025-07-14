@@ -6,6 +6,7 @@ import lombok.Getter;
 public enum ProblemType {
     ENTIDADE_EM_USO("/entidade-em-uso", "Entidade em uso"),
     ERRO_NEGOCIO("/erro-negocio", "Violação de regra de negócio"),
+    DADOS_INVALIDOS("/dados-invalidos", "Dados inválidos"),
     PARAMETRO_INVALIDO("/parametro-invalido", "Parametro informado é inválido"),
     ERRO_DE_SISTEMA("/erro-de-sistema", "Ocorreu um erro interno inesperado no sistema. Tente novamente e se o problema persistir, entre em contato com o admininstrador do sistema"),
     RECURSO_NAO_ENCONTRADO("/recurso-nao-encontrado", "O recurso %s, que você tentou acessar, é inexistente."),

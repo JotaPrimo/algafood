@@ -8,9 +8,9 @@ import com.algaworks.api.algafood.domain.service.CadastroRestauranteService;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
@@ -25,11 +25,16 @@ import java.util.Map;
 @RequestMapping(value = "/restaurantes")
 public class RestauranteController {
 
-    @Autowired
-    private RestauranteRepository restauranteRepository;
 
-    @Autowired
-    private CadastroRestauranteService cadastroRestaurante;
+    private final RestauranteRepository restauranteRepository;
+
+
+    private final CadastroRestauranteService cadastroRestaurante;
+
+    public RestauranteController(RestauranteRepository restauranteRepository, CadastroRestauranteService cadastroRestaurante) {
+        this.restauranteRepository = restauranteRepository;
+        this.cadastroRestaurante = cadastroRestaurante;
+    }
 
     @GetMapping
     public List<Restaurante> listar() {
@@ -43,7 +48,7 @@ public class RestauranteController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Restaurante adicionar(@RequestBody Restaurante restaurante) {
+    public Restaurante adicionar(@RequestBody @Valid Restaurante restaurante) {
         try {
             return cadastroRestaurante.salvar(restaurante);
         } catch (EntidadeNaoEncontradaException e) {

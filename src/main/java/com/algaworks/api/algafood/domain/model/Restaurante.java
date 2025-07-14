@@ -3,6 +3,7 @@ package com.algaworks.api.algafood.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +26,7 @@ public class Restaurante {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotNull(message = "Nome não pode ser ser null")
     @Column(nullable = false)
     private String nome;
 
