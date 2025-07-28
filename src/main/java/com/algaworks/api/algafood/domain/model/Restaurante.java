@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
+import com.algaworks.api.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
@@ -30,17 +31,17 @@ public class Restaurante {
 
     // @NotNull(message = "Nome não pode ser ser null")
     // @NotEmpty(message = "Nome não pode ser ser null")
-    @NotBlank(message = "Nome não pode ser ser null")
+    @NotBlank(message = "Nome é um campo obrigatório", groups = Groups.CadastroRestaurante.class)
     @Column(nullable = false)
     @Length(min = 5, max = 255, message = "Nome deve ter entre {min} e {max} caracteres")
     private String nome;
 
-    @PositiveOrZero
+    @PositiveOrZero(groups = Groups.CadastroRestaurante.class)
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
     @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
-    @NotNull(message = "Cozinha não pode ser null")
+    @NotNull(message = "Cozinha não pode ser null", groups = Groups.CadastroRestaurante.class)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;

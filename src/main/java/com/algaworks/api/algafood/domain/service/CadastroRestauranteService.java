@@ -20,7 +20,7 @@ public class CadastroRestauranteService {
     private CadastroCozinhaService cadastroCozinha;
 
     public Restaurante salvar(Restaurante restaurante) {
-        Long cozinhaId = buscarOuFalhar(restaurante.getId()).getId();
+        Long cozinhaId = restaurante.getCozinha().getId();
 
         Cozinha cozinha = cadastroCozinha.buscarOuFalhar(cozinhaId);
 
@@ -34,5 +34,4 @@ public class CadastroRestauranteService {
                 .orElseThrow(() -> new EntidadeNaoEncontradaException(
                         String.format(MSG_RESTAURANTE_NAO_ENCONTRADO, restauranteId)));
     }
-
 }

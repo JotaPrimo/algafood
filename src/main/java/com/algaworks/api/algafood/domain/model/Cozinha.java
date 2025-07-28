@@ -1,17 +1,16 @@
 package com.algaworks.api.algafood.domain.model;
 
 
+import com.algaworks.api.algafood.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
 @Entity
@@ -19,14 +18,15 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Cozinha {
 
-    @NotNull
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @NotNull(groups = Groups.CadastroRestaurante.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonProperty("titulo")
     @Column(nullable = false)
+    @NotBlank(message = "Nome da cozinha é um campo obrigatório")
+    @Length(min = 5, max = 255, message = "Nome da cozinha deve ter entre {min} e {max} caracteres")
     private String nome;
 
     @JsonIgnore
