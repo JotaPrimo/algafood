@@ -1,6 +1,12 @@
 package com.algaworks.api.algafood.domain.model;
 
+import com.algaworks.api.algafood.Groups;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.groups.ConvertGroup;
+import jakarta.validation.groups.Default;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,10 +20,14 @@ public class Cidade {
     @EqualsAndHashCode.Include
     private Long id;
 
+    @NotBlank(message = "Nome da cidade é um campo obrigatório")
     @Column(nullable = false)
     private String nome;
 
 
+    @Valid
+    @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
+    @NotNull(message = "Estado é um campo obrigatório")
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(nullable = false)
     private Estado estado;

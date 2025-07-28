@@ -7,6 +7,7 @@ import com.algaworks.api.algafood.domain.exceptions.EstadoNaoEncontradoException
 import com.algaworks.api.algafood.domain.model.Cidade;
 import com.algaworks.api.algafood.domain.repository.CidadeRepository;
 import com.algaworks.api.algafood.domain.service.CadastroCidadeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class CidadeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Cidade adicionar(@RequestBody Cidade cidade) {
+    public Cidade adicionar(@RequestBody @Valid Cidade cidade) {
         try {
             return cadastroCidade.salvar(cidade);
         } catch (EntidadeNaoEncontradaException e) {

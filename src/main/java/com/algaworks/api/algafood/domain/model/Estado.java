@@ -1,6 +1,9 @@
 package com.algaworks.api.algafood.domain.model;
 
+import com.algaworks.api.algafood.Groups;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -10,10 +13,12 @@ import lombok.EqualsAndHashCode;
 public class Estado {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @NotNull(message = "Id do estado não pode ser null", groups = Groups.EstadoId.class)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome do estado é um campo obrigatório")
     @Column(nullable = false)
     private String nome;
 
