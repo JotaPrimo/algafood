@@ -3,11 +3,12 @@ package com.algaworks.api.algafood.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.context.annotation.Lazy;
 
 import java.math.BigDecimal;
@@ -26,10 +27,14 @@ public class Restaurante {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotNull(message = "Nome não pode ser ser null")
+    // @NotNull(message = "Nome não pode ser ser null")
+    // @NotEmpty(message = "Nome não pode ser ser null")
+    @NotBlank(message = "Nome não pode ser ser null")
     @Column(nullable = false)
+    @Length(min = 5, max = 255, message = "Nome deve ter entre {min} e {max} caracteres")
     private String nome;
 
+    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
