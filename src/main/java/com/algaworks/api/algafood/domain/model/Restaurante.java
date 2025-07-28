@@ -3,6 +3,7 @@ package com.algaworks.api.algafood.domain.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,6 +39,8 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
+    @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
+    @NotNull(message = "Cozinha não pode ser null")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
