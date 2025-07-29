@@ -29,7 +29,7 @@ public class Restaurante {
 
     // @NotNull(message = "Nome não pode ser ser null")
     // @NotEmpty(message = "Nome não pode ser ser null")
-    @NotBlank(message = "Nome é um campo obrigatório")
+    @NotBlank
     @Column(nullable = false)
     @Length(min = 5, max = 255, message = "Nome deve ter entre {min} e {max} caracteres")
     private String nome;
