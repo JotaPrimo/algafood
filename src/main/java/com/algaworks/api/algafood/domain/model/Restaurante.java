@@ -31,16 +31,16 @@ public class Restaurante {
     // @NotEmpty(message = "Nome não pode ser ser null")
     @NotBlank
     @Column(nullable = false)
-    @Length(min = 5, max = 255, message = "Nome deve ter entre {min} e {max} caracteres")
+    @Length(min = 5, max = 255)
     private String nome;
 
-    @PositiveOrZero()
+    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
     @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
     @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-    @NotNull(message = "Cozinha não pode ser null")
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;

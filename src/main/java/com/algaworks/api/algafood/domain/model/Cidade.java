@@ -20,14 +20,14 @@ public class Cidade {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotBlank(message = "Nome da cidade é um campo obrigatório")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
 
     @Valid
     @ConvertGroup(from = Default.class, to = Groups.EstadoId.class)
-    @NotNull(message = "Estado é um campo obrigatório")
+    @NotNull
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(nullable = false)
     private Estado estado;

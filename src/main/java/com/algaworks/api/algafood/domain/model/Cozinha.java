@@ -25,8 +25,8 @@ public class Cozinha {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Nome da cozinha é um campo obrigatório")
-    @Length(min = 5, max = 255, message = "Nome da cozinha deve ter entre {min} e {max} caracteres")
+    @NotBlank
+    @Length(min = 5, max = 255)
     private String nome;
 
     @JsonIgnore

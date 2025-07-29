@@ -14,11 +14,11 @@ public class Estado {
 
     @Id
     @EqualsAndHashCode.Include
-    @NotNull(message = "Id do estado não pode ser null", groups = Groups.EstadoId.class)
+    @NotNull(groups = Groups.EstadoId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Nome do estado é um campo obrigatório")
+    @NotBlank
     @Column(nullable = false)
     private String nome;
 
