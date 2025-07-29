@@ -1,13 +1,12 @@
 package com.algaworks.api.algafood.domain.model;
 
-import com.algaworks.api.algafood.Groups;
+import core.validation.Groups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Table(name = "cidades")

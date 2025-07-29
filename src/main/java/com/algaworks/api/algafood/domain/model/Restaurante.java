@@ -1,6 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
-import com.algaworks.api.algafood.Groups;
+import core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -34,7 +34,7 @@ public class Restaurante {
     @Length(min = 5, max = 255)
     private String nome;
 
-    @PositiveOrZero(message = "{TaxaFrete.invalida}")
+    @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
