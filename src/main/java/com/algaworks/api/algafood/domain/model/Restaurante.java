@@ -1,10 +1,13 @@
 package com.algaworks.api.algafood.domain.model;
 
-import core.validation.Groups;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import core.validation.Groups;
+import core.validation.ValorZeroIncluiDescricao;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.groups.ConvertGroup;
 import jakarta.validation.groups.Default;
 import lombok.EqualsAndHashCode;
@@ -20,6 +23,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "restaurantes")
+@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome",
+        descricaoObrigatoria = ""
+)
 public class Restaurante {
 
     @Id
