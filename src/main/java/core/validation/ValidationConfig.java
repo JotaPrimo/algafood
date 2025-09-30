@@ -12,7 +12,7 @@ public class ValidationConfig {
     public LocalValidatorFactoryBean validator(MessageSource messageSource) {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(messageSource);
-
         return bean;
     }
+
 }

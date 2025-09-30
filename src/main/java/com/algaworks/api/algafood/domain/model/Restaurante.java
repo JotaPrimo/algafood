@@ -23,8 +23,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "restaurantes")
-@ValorZeroIncluiDescricao(valorField = "taxaFrete", descricaoField = "nome",
-        descricaoObrigatoria = ""
+@ValorZeroIncluiDescricao(valorField = "taxaFrete",
+        descricaoField = "nome",  descricaoObrigatoria = "Frete grátis"
 )
 public class Restaurante {
 
@@ -33,13 +33,12 @@ public class Restaurante {
     @EqualsAndHashCode.Include
     private Long id;
 
-    // @NotNull(message = "Nome não pode ser ser null")
-    // @NotEmpty(message = "Nome não pode ser ser null")
     @NotBlank
     @Column(nullable = false)
     @Length(min = 5, max = 255)
     private String nome;
 
+    @NotNull
     @PositiveOrZero
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
