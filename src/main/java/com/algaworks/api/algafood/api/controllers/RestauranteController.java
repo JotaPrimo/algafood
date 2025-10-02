@@ -2,6 +2,7 @@ package com.algaworks.api.algafood.api.controllers;
 
 import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.exceptions.RestauranteNaoEncontradoException;
+import com.algaworks.api.algafood.domain.exceptions.ValidacaoException;
 import com.algaworks.api.algafood.domain.model.Restaurante;
 import com.algaworks.api.algafood.domain.repository.RestauranteRepository;
 import com.algaworks.api.algafood.domain.service.CadastroRestauranteService;
@@ -15,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.util.ReflectionUtils;
+import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.SmartValidator;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Field;
@@ -28,12 +31,14 @@ public class RestauranteController {
 
     private final RestauranteRepository restauranteRepository;
 
-
     private final CadastroRestauranteService cadastroRestaurante;
 
-    public RestauranteController(RestauranteRepository restauranteRepository, CadastroRestauranteService cadastroRestaurante) {
+    private final SmartValidator smartValidator;
+
+    public RestauranteController(RestauranteRepository restauranteRepository, CadastroRestauranteService cadastroRestaurante, SmartValidator smartValidator) {
         this.restauranteRepository = restauranteRepository;
         this.cadastroRestaurante = cadastroRestaurante;
+        this.smartValidator = smartValidator;
     }
 
     @GetMapping
@@ -79,6 +84,7 @@ public class RestauranteController {
         Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
         merge(campos, restauranteAtual, request);
+        validate(restauranteAtual, "restaurante");
 
         return atualizar(restauranteId, restauranteAtual);
     }
@@ -103,6 +109,15 @@ public class RestauranteController {
         } catch (IllegalArgumentException exception) {
             Throwable rootCouse = ExceptionUtils.getRootCause(exception);
             throw new HttpMessageNotReadableException(exception.getMessage(), rootCouse, servletServerHttpRequest);
+        }
+    }
+
+    private void validate(Restaurante restaurante, String objectName) {
+        BeanPropertyBindingResult bindingResult = new BeanPropertyBindingResult(restaurante, objectName);
+        smartValidator.validate(restaurante, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            throw new ValidacaoException(bindingResult);
         }
     }
 }
