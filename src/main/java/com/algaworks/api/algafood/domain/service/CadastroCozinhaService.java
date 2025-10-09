@@ -4,10 +4,10 @@ import com.algaworks.api.algafood.domain.exceptions.EntidadeEmUsoException;
 import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.model.Cozinha;
 import com.algaworks.api.algafood.domain.repository.CozinhaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroCozinhaService {
@@ -18,13 +18,19 @@ public class CadastroCozinhaService {
     private static final String MSG_COZINHA_NAO_ENCONTRADA
             = "Não existe um cadastro de cozinha com código %d";
 
-    @Autowired
-    private CozinhaRepository cozinhaRepository;
 
+    private final CozinhaRepository cozinhaRepository;
+
+    public CadastroCozinhaService(CozinhaRepository cozinhaRepository) {
+        this.cozinhaRepository = cozinhaRepository;
+    }
+
+    @Transactional
     public Cozinha salvar(Cozinha cozinha) {
         return cozinhaRepository.save(cozinha);
     }
 
+    @Transactional
     public void excluir(Long cozinhaId) {
         try {
             cozinhaRepository.deleteById(cozinhaId);

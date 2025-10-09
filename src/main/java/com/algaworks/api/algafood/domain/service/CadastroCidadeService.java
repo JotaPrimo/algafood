@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CadastroCidadeService {
@@ -20,12 +21,16 @@ public class CadastroCidadeService {
     private static final String MSG_CIDADE_NAO_ENCONTRADA
             = "Não existe um cadastro de cidade com código %d";
 
-    @Autowired
-    private CidadeRepository cidadeRepository;
+    private final CidadeRepository cidadeRepository;
 
-    @Autowired
-    private CadastroEstadoService cadastroEstado;
+    private final CadastroEstadoService cadastroEstado;
 
+    public CadastroCidadeService(CidadeRepository cidadeRepository, CadastroEstadoService cadastroEstado) {
+        this.cidadeRepository = cidadeRepository;
+        this.cadastroEstado = cadastroEstado;
+    }
+
+    @Transactional
     public Cidade salvar(Cidade cidade) {
         Long estadoId = cidade.getEstado().getId();
         Estado estado = cadastroEstado.buscarOuFalhar(estadoId);
@@ -35,6 +40,7 @@ public class CadastroCidadeService {
         return cidadeRepository.save(cidade);
     }
 
+    @Transactional
     public void excluir(Long cidadeId) {
         try {
             cidadeRepository.deleteById(cidadeId);
