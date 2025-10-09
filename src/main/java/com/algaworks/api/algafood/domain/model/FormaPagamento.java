@@ -1,7 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Table(name = "forma_pagamentos")

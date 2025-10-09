@@ -1,10 +1,7 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.Objects;
 
 @Table(name = "permissaos")
 @Entity

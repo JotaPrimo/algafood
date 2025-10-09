@@ -1,12 +1,11 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,10 +23,10 @@ public class Grupo {
     private String nome;
 
     @CreationTimestamp
-    private LocalDateTime dataCadastro;
+    private OffsetDateTime dataCadastro;
 
     @UpdateTimestamp
-    private LocalDateTime dataAtualizacao;
+    private OffsetDateTime dataAtualizacao;
 
     @ManyToMany
     @JoinTable(name = "grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
@@ -37,7 +36,7 @@ public class Grupo {
     public Grupo() {
     }
 
-    public Grupo(Long id, String nome, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao, List<Permissao> permissoes) {
+    public Grupo(Long id, String nome, OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao, List<Permissao> permissoes) {
         this.id = id;
         this.nome = nome;
         this.dataCadastro = dataCadastro;
@@ -61,19 +60,19 @@ public class Grupo {
         this.nome = nome;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public OffsetDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(OffsetDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
-    public LocalDateTime getDataAtualizacao() {
+    public OffsetDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 

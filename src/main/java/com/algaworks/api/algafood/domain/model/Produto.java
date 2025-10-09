@@ -1,9 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-
-import java.util.Objects;
 
 @Entity
 @Table(name = "produtos")

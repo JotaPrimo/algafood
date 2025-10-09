@@ -2,13 +2,12 @@ package com.algaworks.api.algafood.domain.model;
 
 import com.algaworks.api.algafood.domain.enums.EnumStatusPedido;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +33,13 @@ public class Pedido {
     private Endereco enderecoEntrega;
 
     @CreationTimestamp
-    private LocalDateTime dataCriacao;
+    private OffsetDateTime dataCriacao;
 
     @UpdateTimestamp
-    private LocalDateTime dataAtualizacao;
+    private OffsetDateTime dataAtualizacao;
 
-    private LocalDateTime dataCancelamento;
-    private LocalDateTime dataEntrega;
+    private OffsetDateTime dataCancelamento;
+    private OffsetDateTime dataEntrega;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -60,7 +59,7 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, BigDecimal subtotal, BigDecimal taxaFrete, BigDecimal valorTotal, List<ItemPedido> itemPedidos, EnumStatusPedido statusPedido, Endereco enderecoEntrega, LocalDateTime dataCriacao, LocalDateTime dataAtualizacao, LocalDateTime dataCancelamento, LocalDateTime dataEntrega, FormaPagamento formaPagamento, Restaurante restaurante, Usuario cliente, List<ItemPedido> itens) {
+    public Pedido(Long id, BigDecimal subtotal, BigDecimal taxaFrete, BigDecimal valorTotal, List<ItemPedido> itemPedidos, EnumStatusPedido statusPedido, Endereco enderecoEntrega, OffsetDateTime dataCriacao, OffsetDateTime dataAtualizacao, OffsetDateTime dataCancelamento, OffsetDateTime dataEntrega, FormaPagamento formaPagamento, Restaurante restaurante, Usuario cliente, List<ItemPedido> itens) {
         this.id = id;
         this.subtotal = subtotal;
         this.taxaFrete = taxaFrete;
@@ -134,35 +133,35 @@ public class Pedido {
         this.enderecoEntrega = enderecoEntrega;
     }
 
-    public LocalDateTime getDataCriacao() {
+    public OffsetDateTime getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(LocalDateTime dataCriacao) {
+    public void setDataCriacao(OffsetDateTime dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
-    public LocalDateTime getDataAtualizacao() {
+    public OffsetDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 
-    public LocalDateTime getDataCancelamento() {
+    public OffsetDateTime getDataCancelamento() {
         return dataCancelamento;
     }
 
-    public void setDataCancelamento(LocalDateTime dataCancelamento) {
+    public void setDataCancelamento(OffsetDateTime dataCancelamento) {
         this.dataCancelamento = dataCancelamento;
     }
 
-    public LocalDateTime getDataEntrega() {
+    public OffsetDateTime getDataEntrega() {
         return dataEntrega;
     }
 
-    public void setDataEntrega(LocalDateTime dataEntrega) {
+    public void setDataEntrega(OffsetDateTime dataEntrega) {
         this.dataEntrega = dataEntrega;
     }
 

@@ -1,11 +1,10 @@
 package com.algaworks.api.algafood.domain.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +29,7 @@ public class Usuario {
 
     @CreationTimestamp
     @Column(nullable = false)
-    private LocalDateTime dataCadastro;
+    private OffsetDateTime dataCadastro;
 
 
     @ManyToMany
@@ -41,7 +40,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long id, String nome, String email, String senha, LocalDateTime dataCadastro, List<Grupo> grupos) {
+    public Usuario(Long id, String nome, String email, String senha, OffsetDateTime dataCadastro, List<Grupo> grupos) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -82,11 +81,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public OffsetDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(OffsetDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
