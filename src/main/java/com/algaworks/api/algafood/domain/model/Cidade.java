@@ -1,6 +1,6 @@
 package com.algaworks.api.algafood.domain.model;
 
-import core.validation.Groups;
+import com.algaworks.api.algafood.core.validation.Groups;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

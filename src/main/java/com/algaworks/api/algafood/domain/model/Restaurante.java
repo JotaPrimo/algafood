@@ -1,8 +1,9 @@
 package com.algaworks.api.algafood.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import core.validation.Groups;
-import core.validation.ValorZeroIncluiDescricao;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.algaworks.api.algafood.core.validation.Groups;
+import com.algaworks.api.algafood.core.validation.ValorZeroIncluiDescricao;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -43,6 +44,7 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
+    @JsonIgnoreProperties(value = {"nome"}, allowGetters = true)
     @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
     @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     @NotNull

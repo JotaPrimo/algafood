@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.controllers;
 
+import com.algaworks.api.algafood.AlgafoodApiApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,7 +8,8 @@ import org.springframework.test.context.jdbc.Sql;
 
 
 @SpringBootTest(
-        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = AlgafoodApiApplication.class
 )
 @Sql(scripts = "/sql/restaurantes/restaurantes-insert.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/sql/restaurantes/restaurantes-truncate.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
