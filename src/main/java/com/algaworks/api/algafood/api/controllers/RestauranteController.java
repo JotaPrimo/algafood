@@ -1,5 +1,6 @@
 package com.algaworks.api.algafood.api.controllers;
 
+import com.algaworks.api.algafood.api.model.RestauranteModel;
 import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
 import com.algaworks.api.algafood.domain.exceptions.RestauranteNaoEncontradoException;
 import com.algaworks.api.algafood.domain.exceptions.ValidacaoException;
@@ -47,8 +48,13 @@ public class RestauranteController {
     }
 
     @GetMapping("/{restauranteId}")
-    public Restaurante buscar(@PathVariable Long restauranteId) {
-        return cadastroRestaurante.buscarOuFalhar(restauranteId);
+    public RestauranteModel buscar(@PathVariable Long restauranteId) {
+        Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
+
+        RestauranteModel restauranteModel = new RestauranteModel();
+
+
+        return restauranteModel;
     }
 
     @PostMapping
