@@ -1,9 +1,8 @@
 package com.algaworks.api.algafood.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.algaworks.api.algafood.core.validation.Groups;
 import com.algaworks.api.algafood.core.validation.ValorZeroIncluiDescricao;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +24,7 @@ import java.util.List;
 @Entity
 @Table(name = "restaurantes")
 @ValorZeroIncluiDescricao(valorField = "taxaFrete",
-        descricaoField = "nome",  descricaoObrigatoria = "Frete grátis"
+        descricaoField = "nome", descricaoObrigatoria = "Frete grátis"
 )
 public class Restaurante {
 
@@ -44,29 +43,25 @@ public class Restaurante {
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-    @JsonIgnoreProperties(value = {"nome"}, allowGetters = true)
+
     @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
     @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
 
-    @JsonIgnore
     @Embedded
     private Endereco endereco;
 
-    @JsonIgnore
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime dataCadastro;
 
-    @JsonIgnore
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime dataAtualizacao;
 
-    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "restaurante_forma_pagamento",
