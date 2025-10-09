@@ -17,6 +17,7 @@ import org.hibernate.validator.constraints.Length;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,12 +56,12 @@ public class Restaurante {
     private Endereco endereco;
 
     @CreationTimestamp
-    @Column(nullable = false)
-    private LocalDateTime dataCadastro;
+    @Column(nullable = false, columnDefinition = "datetime")
+    private OffsetDateTime dataCadastro;
 
     @UpdateTimestamp
-    @Column(nullable = false)
-    private LocalDateTime dataAtualizacao;
+    @Column(nullable = false, columnDefinition = "datetime")
+    private OffsetDateTime dataAtualizacao;
 
     @ManyToMany
     @JoinTable(
@@ -77,7 +78,7 @@ public class Restaurante {
     public Restaurante() {
     }
 
-    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Cozinha cozinha, Endereco endereco, LocalDateTime dataCadastro, LocalDateTime dataAtualizacao, List<Produto> produtos, List<FormaPagamento> formasPagamento) {
+    public Restaurante(Long id, String nome, BigDecimal taxaFrete, Cozinha cozinha, Endereco endereco, OffsetDateTime dataCadastro, OffsetDateTime dataAtualizacao, List<Produto> produtos, List<FormaPagamento> formasPagamento) {
         this.id = id;
         this.nome = nome;
         this.taxaFrete = taxaFrete;
@@ -129,19 +130,19 @@ public class Restaurante {
         this.endereco = endereco;
     }
 
-    public LocalDateTime getDataCadastro() {
+    public OffsetDateTime getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(LocalDateTime dataCadastro) {
+    public void setDataCadastro(OffsetDateTime dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 
-    public LocalDateTime getDataAtualizacao() {
+    public OffsetDateTime getDataAtualizacao() {
         return dataAtualizacao;
     }
 
-    public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+    public void setDataAtualizacao(OffsetDateTime dataAtualizacao) {
         this.dataAtualizacao = dataAtualizacao;
     }
 
