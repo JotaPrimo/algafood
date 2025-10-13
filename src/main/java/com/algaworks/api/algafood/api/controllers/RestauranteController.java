@@ -1,6 +1,6 @@
 package com.algaworks.api.algafood.api.controllers;
 
-import com.algaworks.api.algafood.api.model.CozinhaModel;
+import com.algaworks.api.algafood.api.assembler.RestauranteModelAssembler;
 import com.algaworks.api.algafood.api.model.RestauranteModel;
 import com.algaworks.api.algafood.api.model.input.RestauranteInput;
 import com.algaworks.api.algafood.domain.exceptions.EntidadeNaoEncontradaException;
@@ -39,22 +39,25 @@ public class RestauranteController {
 
     private final SmartValidator smartValidator;
 
-    public RestauranteController(RestauranteRepository restauranteRepository, CadastroRestauranteService cadastroRestaurante, SmartValidator smartValidator) {
+    private final RestauranteModelAssembler restauranteModelAssembler;
+
+    public RestauranteController(RestauranteRepository restauranteRepository, CadastroRestauranteService cadastroRestaurante, SmartValidator smartValidator, RestauranteModelAssembler restauranteModelAssembler) {
         this.restauranteRepository = restauranteRepository;
         this.cadastroRestaurante = cadastroRestaurante;
         this.smartValidator = smartValidator;
+        this.restauranteModelAssembler = restauranteModelAssembler;
     }
 
     @GetMapping
     public List<RestauranteModel> listar() {
-        return toCollectionModel(restauranteRepository.findAll());
+        return restauranteModelAssembler.toCollectionModel(restauranteRepository.findAll());
     }
 
     @GetMapping("/{restauranteId}")
     public RestauranteModel buscar(@PathVariable Long restauranteId) {
         Restaurante restaurante = cadastroRestaurante.buscarOuFalhar(restauranteId);
 
-        return toModel(restaurante);
+        return restauranteModelAssembler.toModel(restaurante);
     }
 
     @PostMapping
@@ -85,17 +88,6 @@ public class RestauranteController {
         } catch (EntidadeNaoEncontradaException e) {
             throw new RestauranteNaoEncontradoException(e.getMessage());
         }
-    }
-
-    @PatchMapping("/{restauranteId}")
-    public RestauranteModel atualizarParcial(@PathVariable Long restauranteId,
-                                        @RequestBody Map<String, Object> campos, HttpServletRequest request) {
-        Restaurante restauranteAtual = cadastroRestaurante.buscarOuFalhar(restauranteId);
-
-        merge(campos, restauranteAtual, request);
-        validate(restauranteAtual, "restaurante");
-
-        return atualizar(restauranteId, restauranteAtual);
     }
 
     private void merge(Map<String, Object> dadosOrigem, Restaurante restauranteDestino, HttpServletRequest request) {
@@ -130,25 +122,6 @@ public class RestauranteController {
         }
     }
 
-    private RestauranteModel toModel(Restaurante restaurante) {
-        CozinhaModel cozinhaModel = new CozinhaModel();
-        cozinhaModel.setId(restaurante.getId());
-        cozinhaModel.setNome(restaurante.getCozinha().getNome());
-
-        RestauranteModel restauranteModel = new RestauranteModel();
-        restauranteModel.setId(restaurante.getId());
-        restauranteModel.setNome(restaurante.getNome());
-        restauranteModel.setTaxaFrete(restaurante.getTaxaFrete());
-        restauranteModel.setCozinha(cozinhaModel);
-
-        return restauranteModel;
-    }
-
-    private List<RestauranteModel> toCollectionModel(List<Restaurante> restaurantes) {
-        return restaurantes.stream()
-                .map(restaurante -> toModel(restaurante))
-                .toList();
-    }
 
     private Restaurante toDomainObject(RestauranteInput restauranteInput) {
         Cozinha cozinha = new Cozinha();
