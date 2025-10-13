@@ -20,12 +20,12 @@ public class Cozinha {
 
     @Id
     @EqualsAndHashCode.Include
-    @NotNull(groups = Groups.CozinhaId.class)
+    // @NotNull(groups = Groups.CozinhaId.class)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     @NotBlank
+    @Column(nullable = false)
     @Length(min = 5, max = 255)
     private String nome;
 

@@ -33,20 +33,14 @@ public class Restaurante {
     @EqualsAndHashCode.Include
     private Long id;
 
-    @NotBlank
     @Column(nullable = false)
     @Length(min = 5, max = 255)
     private String nome;
 
-    @NotNull
-    @PositiveOrZero
+
     @Column(name = "taxa_frete", nullable = false)
     private BigDecimal taxaFrete;
 
-
-    @Valid // isso valida em cascata, significa que vai dentro do objeto ver se seus dados estão ok
-    @ConvertGroup(from = Default.class, to = Groups.CozinhaId.class)
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "cozinha_id", nullable = false)
     private Cozinha cozinha;
