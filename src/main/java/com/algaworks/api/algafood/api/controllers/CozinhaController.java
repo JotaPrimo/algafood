@@ -63,5 +63,4 @@ public class CozinhaController {
     public void remover(@PathVariable Long cozinhaId) {
         cadastroCozinha.excluir(cozinhaId);
     }
-
 }
